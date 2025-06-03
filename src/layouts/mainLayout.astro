@@ -1,18 +1,11 @@
 ---
-import { Font } from "astro:assets";
-import "../styles/global.css";
+import Head from "@components/Head.astro";
+import "@styles/global.css";
 ---
 
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <Font cssVariable="--font-archivo" preload />
-    <Font cssVariable="--font-geist-mono" preload />
-    <Font cssVariable="--font-geist" preload />
-    <title>Astro</title>
+    <Head />
   </head>
 
   <body>
