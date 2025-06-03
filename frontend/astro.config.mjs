@@ -3,8 +3,6 @@ import { defineConfig, fontProviders } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
 
-import sanity from "@sanity/astro";
-
 // https://astro.build/config
 export default defineConfig({
   experimental: {
@@ -46,11 +44,5 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [
-    sanity({
-      projectId: "k4pfgwt6",
-      dataset: "production",
-      useCdn: false, // for static builds
-    }),
-  ],
+  integrations: [],
 });
