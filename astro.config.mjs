@@ -2,7 +2,6 @@
 import { defineConfig, fontProviders } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
-import path from "path";
 
 // https://astro.build/config
 export default defineConfig({
@@ -42,13 +41,5 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
-    resolve: {
-      alias: {
-        "@layouts": path.resolve("./src/layouts"),
-        "@components": path.resolve("./src/components"),
-        "@lib": path.resolve("./src/lib"),
-        "@styles": path.resolve("./src/styles"),
-      },
-    },
   },
 });
