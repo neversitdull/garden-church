@@ -3,6 +3,8 @@ import { defineConfig, fontProviders } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
 
+import alpinejs from "@astrojs/alpinejs";
+
 // https://astro.build/config
 export default defineConfig({
   experimental: {
@@ -44,5 +46,5 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [],
+  integrations: [alpinejs()],
 });
