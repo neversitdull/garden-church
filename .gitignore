@@ -1,7 +1,7 @@
 # ───── Build Outputs ─────
 dist/
-frontend/dist/
-frontend/.astro/
+web/dist/
+web/.astro/
 studio/dist/
 
 # ───── Generated Types ─────
