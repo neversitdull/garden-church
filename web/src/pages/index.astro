@@ -1,11 +1,16 @@
 ---
+import Container from "@components/layout/Container.astro";
 import MainLayout from "@layouts/MainLayout.astro";
 ---
 
 <MainLayout>
-  <div class="flex flex-col items-center justify-center h-screen bg-gray-100">
-    <h1 class="text-8xl font-bold font-display font-stretch-62% uppercase">
-      Here as in Heaven
-    </h1>
+  <div class="flex flex-col items-center justify-center h-screen">
+    <Container>
+      <h1
+        class="text-8xl font-bold font-display font-stretch-62% uppercase text-center"
+      >
+        Here as in Heaven
+      </h1>
+    </Container>
   </div>
 </MainLayout>
