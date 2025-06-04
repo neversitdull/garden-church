@@ -16,10 +16,12 @@
     "alpinejs": "^3.14.9",
     "astro": "^5.8.1",
     "astro-portabletext": "^0.11.1",
+    "clsx": "^2.1.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-is": "^19.1.0",
     "styled-components": "^6.1.18",
+    "tailwind-merge": "^3.3.0",
     "tailwindcss": "^4.1.5"
   }
 }
