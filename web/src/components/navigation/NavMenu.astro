@@ -1,5 +1,7 @@
 ---
 import Container from "@components/layout/Container.astro";
+import Logo from "@components/ui/Logo.astro";
+import CloseIcon from "@components/icons/CloseIcon.astro";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -14,32 +16,34 @@ const navItems = [
   x-show="open"
   x-cloak
   @click.outside="open = false"
-  @keydown.escape.window="open = false"
->
+  @keydown.escape.window="open = false">
   <header class="fixed z-[60] w-full h-20">
-    <Container>
-      <div class="flex items-center justify-between h-full text-lg font-sans">
-        <a href="/" aria-label="Garden Church Logo" class="">Logo</a>
-        <button @click="open = false" aria-label="Close Menu" class="text-white"
-          >Close</button
-        >
+    <Container class="h-full">
+      <div
+        class="flex items-center justify-between h-full font-sans text-lg border-b border-gray-800">
+        <a href="/">
+          <Logo height="32" ariaLabel="Garden Church Logo" />
+        </a>
+        <button @click="open = false" aria-label="Close Menu">
+          <CloseIcon ariaLabel="Close Menu" />
+        </button>
       </div>
     </Container>
   </header>
 
-  <nav
-    class="flex flex-col items-center justify-center flex-grow text-2xl font-medium space-y-8 mt-20"
-  >
-    {
-      navItems.map((item) => (
-        <a
-          href={item.href}
-          class={`transition-colors hover:text-gray-300`}
-          @click="open = false"
-        >
-          {item.label}
-        </a>
-      ))
-    }
-  </nav>
+  <Container class="flex flex-col h-full pt-20">
+    <nav
+      class="flex flex-col items-start justify-center flex-1 gap-8 text-2xl font-medium">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class={`transition-colors hover:text-gray-300`}
+            @click="open = false">
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </Container>
 </div>

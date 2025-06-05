@@ -1,0 +1,28 @@
+---
+const {
+  class: className = "",
+  width = "24",
+  height = "24",
+  strokeColor = "currentColor",
+  fillColor = "none",
+  ariaLabel,
+} = Astro.props;
+
+const role = ariaLabel ? "img" : "presentation";
+---
+
+<svg
+  class={className}
+  width={width}
+  height={height}
+  viewBox="0 0 24 24"
+  fill={fillColor}
+  stroke={strokeColor}
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-label={ariaLabel}
+  role={role}
+  xmlns="http://www.w3.org/2000/svg"
+  ><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg
+>

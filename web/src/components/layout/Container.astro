@@ -4,7 +4,6 @@ const { class: className = "" } = Astro.props;
 ---
 
 <div
-  class={cn("relative h-full px-4 mx-auto max-w-[1600px] lg:px-10", className)}
->
+  class={cn("relative px-4 mx-auto w-full max-w-[1600px] lg:px-10", className)}>
   <slot />
 </div>

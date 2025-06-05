@@ -1,22 +1,24 @@
 ---
 import Container from "@components/layout/Container.astro";
 import NavMenu from "@components/navigation/NavMenu.astro";
+import Logo from "@components/ui/Logo.astro";
+import MenuIcon from "@components/icons/MenuIcon.astro";
 ---
 
 <header
   x-data="{ open: false }"
   x-init="$watch('open', o => document.body.style.overflow = o ? 'hidden' : '')"
-  class="fixed z-[60] w-full h-20"
->
-  <Container>
+  class="fixed z-[60] w-full h-20">
+  <Container class="h-full">
     <div
-      class="flex items-center justify-between h-full border-b border-gray-200 text-lg font-sans"
-    >
-      <a href="/" aria-label="Garden Church Logo"> Logo </a>
+      class="flex items-center justify-between h-full font-sans text-lg border-b border-gray-200">
+      <a href="/">
+        <Logo height="32" ariaLabel="Garden Church Logo" />
+      </a>
 
       <!-- Toggle button -->
       <button class="" @click="open = true" aria-label="Open Menu">
-        Menu
+        <MenuIcon ariaLabel="Open Menu" />
       </button>
     </div>
   </Container>
