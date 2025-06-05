@@ -1,0 +1,17 @@
+content:
+  - name: navigation
+    label: Navigation
+    type: file
+    path: src/data/navigation.yml
+    fields:
+      - name: links
+        label: Links
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Label
+            type: string
+          - name: url
+            label: URL
+            type: string
