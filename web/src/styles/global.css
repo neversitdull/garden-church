@@ -126,3 +126,7 @@
   --color-brand-red: var(--color-red-500);
   --color-brand-slate: var(--color-slate-100);
 }
+
+[x-cloak] {
+  display: none !important;
+}

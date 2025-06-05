@@ -1,0 +1,45 @@
+---
+import Container from "@components/layout/Container.astro";
+
+const navItems = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Contact", href: "/contact" },
+];
+---
+
+<div
+  class="fixed inset-0 z-[100] flex flex-col bg-black text-white overflow-y-auto overscroll-contain"
+  x-show="open"
+  x-cloak
+  @click.outside="open = false"
+  @keydown.escape.window="open = false"
+>
+  <header class="fixed z-[60] w-full h-20">
+    <Container>
+      <div class="flex items-center justify-between h-full text-lg font-sans">
+        <a href="/" aria-label="Garden Church Logo" class="">Logo</a>
+        <button @click="open = false" aria-label="Close Menu" class="text-white"
+          >Close</button
+        >
+      </div>
+    </Container>
+  </header>
+
+  <nav
+    class="flex flex-col items-center justify-center flex-grow text-2xl font-medium space-y-8 mt-20"
+  >
+    {
+      navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`transition-colors hover:text-gray-300`}
+          @click="open = false"
+        >
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+</div>

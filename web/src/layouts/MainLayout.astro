@@ -1,5 +1,7 @@
 ---
 import Head from "@components/layout/Head.astro";
+import Header from "@components/navigation/Header.astro";
+
 import "@styles/global.css";
 ---
 
@@ -9,6 +11,7 @@ import "@styles/global.css";
   </head>
 
   <body>
+    <Header />
     <slot />
   </body>
 </html>
