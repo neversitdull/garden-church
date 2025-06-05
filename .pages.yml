@@ -2,7 +2,7 @@ content:
   - name: navigation
     label: Navigation
     type: file
-    path: src/data/navigation.yml
+    path: web/src/data/navigation.yml
     fields:
       - name: links
         label: Links
