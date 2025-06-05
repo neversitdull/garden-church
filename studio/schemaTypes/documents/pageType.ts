@@ -1,19 +1,30 @@
-import { DocumentIcon } from "@sanity/icons";
+import {
+  orderRankField,
+  orderRankOrdering,
+} from "@sanity/orderable-document-list";
+import { PanelTop } from "lucide-react";
 import { defineField, defineType } from "sanity";
-import { definePageSlugField } from "../../utils/slug";
+import { GROUP, GROUPS } from "../../utils/constants";
+import { ogFields } from "../../utils/ogFields";
+import { seoFields } from "../../utils/seoFields";
+import { createPageSlug, isUniqueSlug } from "../../utils/slug";
 
 export const pageType = defineType({
   name: "page",
   title: "Pages",
   type: "document",
-  icon: DocumentIcon,
+  icon: PanelTop,
   description:
     "Create a new page on your website. For example: About, Contact, Ministries, etc.",
+  groups: GROUPS,
+  orderings: [orderRankOrdering],
   fields: [
+    orderRankField({ type: "page" }),
     defineField({
       name: "title",
       type: "string",
       title: "Title",
+      group: GROUP.CONTENT,
       description:
         "This is the main heading that will be shown at the top of the page and in search engines.",
       validation: (Rule) => Rule.required().error("Page title is required"),
@@ -22,6 +33,7 @@ export const pageType = defineType({
       name: "description",
       type: "text",
       title: "Meta Description",
+      group: GROUP.CONTENT,
       description:
         "Used for SEO. This summary appears in search engine results.",
       rows: 3,
@@ -30,11 +42,11 @@ export const pageType = defineType({
         Rule.max(160).warning("Keep under 160 characters to avoid truncation."),
       ],
     }),
-    definePageSlugField(), // includes createPageSlug and isUniqueSlug
     defineField({
       name: "parent",
       title: "Parent Page",
       type: "reference",
+      group: GROUP.CONTENT,
       to: [{ type: "page" }],
       description:
         "Select a parent page if this is a subpage (e.g. Youth under Ministries).",
@@ -74,15 +86,33 @@ export const pageType = defineType({
         }),
     }),
     defineField({
+      name: "slug",
+      title: "Slug",
+      description:
+        "The URL of the page. Must be unique! Can be automatically generated from the title.",
+      type: "slug",
+      group: GROUP.CONTENT,
+      options: {
+        source: "title",
+        slugify: createPageSlug,
+        isUnique: isUniqueSlug,
+      },
+      validation: (Rule) =>
+        Rule.required().error("Slug is required for the page URL"),
+    }),
+    defineField({
       name: "image",
       type: "image",
       title: "Social Sharing Image",
+      group: GROUP.CONTENT,
       description:
-        "This image will be used when the page is shared on social media.",
+        "A main image for sharing on social media or within search engine results.",
       options: {
         hotspot: true,
       },
     }),
+    ...seoFields,
+    ...ogFields,
   ],
 
   preview: {
@@ -95,9 +125,7 @@ export const pageType = defineType({
     },
     prepare({ title, slug, parentSlug, parentTitle, media }) {
       const fullPath = parentSlug ? `/${parentSlug}/${slug}` : `/${slug}`;
-      const subtitle = parentTitle
-        ? `🌐 garden.church${fullPath} (child of ${parentTitle})`
-        : `🌐 garden.church${fullPath}`;
+      const subtitle = `garden.church${fullPath}`;
 
       return {
         title: title || "Untitled Page",

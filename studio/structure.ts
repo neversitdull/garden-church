@@ -1,7 +1,8 @@
-import { CogIcon } from "@sanity/icons";
+import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
+import { File, MapIcon } from "lucide-react";
 import type { StructureResolver } from "sanity/structure";
 
-export const structure: StructureResolver = (S) =>
+export const structure: StructureResolver = (S, context) =>
   S.list()
     .title("Content")
     .items([
@@ -9,7 +10,7 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .title("Navigation")
         .id("navigation")
-        .icon(CogIcon)
+        .icon(MapIcon)
         .child(
           S.document()
             .schemaType("navigation")
@@ -18,8 +19,16 @@ export const structure: StructureResolver = (S) =>
         ),
       // Divider
       S.divider(),
-      // All other document types (filtered to exclude navigation)
+      // Orderable Pages
+      orderableDocumentListDeskItem({
+        type: "page",
+        title: "Pages",
+        icon: File,
+        S,
+        context,
+      }),
+      // All other document types (filtered to exclude navigation and page)
       ...S.documentTypeListItems().filter(
-        (listItem) => !["navigation"].includes(listItem.getId()!)
+        (listItem) => !["navigation", "page"].includes(listItem.getId()!)
       ),
     ]);

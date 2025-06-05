@@ -24,6 +24,7 @@ export const seoFields = [
     type: "boolean",
     title: "Hide from search engines (noindex)",
     group: GROUP.SEO,
+    initialValue: false,
     description: "If true, this page will not be indexed by search engines.",
   }),
   defineField({
@@ -31,6 +32,7 @@ export const seoFields = [
     type: "boolean",
     title: "Hide from navigation/sitemaps",
     group: GROUP.SEO,
+    initialValue: false,
     description: "If true, this page will be excluded from nav and sitemap.",
   }),
 ];
