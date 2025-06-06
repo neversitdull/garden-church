@@ -1,18 +1,6 @@
 import type { SlugifierFn } from "sanity";
-import {
-  defineField,
-  getDraftId,
-  getPublishedId,
-  type FieldDefinition,
-  type SlugValidationContext,
-} from "sanity";
+import { getDraftId, getPublishedId, type SlugValidationContext } from "sanity";
 import slugify from "slugify";
-
-// Hardcoded slugs for special cases
-const slugMapper: Record<string, string> = {
-  home: "/", // "Home" page slug becomes "/"
-  ministries: "/ministries", // Optional: static section
-};
 
 // Ensure slug is unique (excludes draft and published versions of current doc)
 export async function isUniqueSlug(
@@ -34,32 +22,29 @@ export async function isUniqueSlug(
   return result.length === 0;
 }
 
-// Slug generator
-export const createPageSlug: SlugifierFn = (input, _, { parent }) => {
-  const rawSlug = slugify(input, {
-    lower: true,
-    remove: /[^a-zA-Z0-9\s-]/g,
-  });
-
-  if (slugMapper[rawSlug]) {
-    return slugMapper[rawSlug];
-  }
-
-  return rawSlug;
+export const getDocTypePrefix = (type: string) => {
+  if (["page"].includes(type)) return "";
+  return type;
 };
 
-// Wrapper for defining a consistent slug field
-export function definePageSlugField(): FieldDefinition<"slug"> {
-  return defineField({
-    name: "slug",
-    title: "Slug",
-    type: "slug",
-    options: {
-      source: "title",
-      slugify: createPageSlug,
-      isUnique: isUniqueSlug,
-    },
-    validation: (Rule) =>
-      Rule.required().error("Slug is required for the page URL"),
+const slugMapper = {
+  homePage: "/",
+} as Record<string, string>;
+// Slug generator
+
+export const createSlug: SlugifierFn = (input, _, { parent }) => {
+  const { _type } = parent as {
+    _type: string;
+  };
+
+  if (slugMapper[_type]) return slugMapper[_type];
+
+  const prefix = getDocTypePrefix(_type);
+
+  const slug = slugify(input, {
+    lower: true,
+    remove: /[^a-zA-Z0-9/ ]/g,
   });
-}
+
+  return `/${[prefix, slug].filter(Boolean).join("/")}`;
+};

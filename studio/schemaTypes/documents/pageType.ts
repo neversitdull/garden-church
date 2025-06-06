@@ -4,10 +4,11 @@ import {
 } from "@sanity/orderable-document-list";
 import { PanelTop } from "lucide-react";
 import { defineField, defineType } from "sanity";
+import { PathnameFieldComponent } from "../../components/pathNameField";
 import { GROUP, GROUPS } from "../../utils/constants";
 import { ogFields } from "../../utils/ogFields";
 import { seoFields } from "../../utils/seoFields";
-import { createPageSlug, isUniqueSlug } from "../../utils/slug";
+import { isUniqueSlug } from "../../utils/slug";
 
 export const pageType = defineType({
   name: "page",
@@ -88,17 +89,21 @@ export const pageType = defineType({
     defineField({
       name: "slug",
       title: "Slug",
-      description:
-        "The URL of the page. Must be unique! Can be automatically generated from the title.",
       type: "slug",
       group: GROUP.CONTENT,
+      components: {
+        field: PathnameFieldComponent,
+      },
       options: {
         source: "title",
-        slugify: createPageSlug,
-        isUnique: isUniqueSlug,
+        slugify: (input) =>
+          input
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^a-zA-Z0-9-]/g, ""),
+        isUnique: isUniqueSlug, // your uniqueness validator
       },
-      validation: (Rule) =>
-        Rule.required().error("Slug is required for the page URL"),
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "image",
@@ -119,13 +124,12 @@ export const pageType = defineType({
     select: {
       title: "title",
       slug: "slug.current",
-      parentSlug: "parent.slug.current",
-      parentTitle: "parent.title",
+      fullSlug: "fullSlug",
       media: "image",
     },
-    prepare({ title, slug, parentSlug, parentTitle, media }) {
-      const fullPath = parentSlug ? `/${parentSlug}/${slug}` : `/${slug}`;
-      const subtitle = `garden.church${fullPath}`;
+    prepare({ title, slug, fullSlug, media }) {
+      const displayPath = fullSlug || `/${slug}`;
+      const subtitle = `garden.church${displayPath}`;
 
       return {
         title: title || "Untitled Page",
